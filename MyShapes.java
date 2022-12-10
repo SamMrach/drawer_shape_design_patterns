@@ -4,6 +4,8 @@
  */
 package java2ddrawingapplication;
 
+import java2ddrawingapplication.Protoype.Prototype;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -15,8 +17,10 @@ import java.awt.Stroke;
  *
  * @author Ismael Youssef
  */
-public abstract class MyShapes {
+public abstract class MyShapes  {
     private Point startPoint = new Point();
+
+
     private Point endPoint = new Point();
     private Paint paint;
     private Stroke stroke;

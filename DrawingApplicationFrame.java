@@ -5,6 +5,8 @@
  */
 package java2ddrawingapplication;
 
+import java2ddrawingapplication.FactoryPattern.ShapeFactory;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.*;
 
@@ -79,8 +82,8 @@ public class DrawingApplicationFrame extends JFrame implements ActionListener
         // add panel1's components to it
         panel1.add(panel1_text);
         panel1.add(shape);
-        panel1.add(color1);
-        panel1.add(color2);
+        //panel1.add(color1);
+        //panel1.add(color2);
         panel1.add(undo);
         panel1.add(clear);
         panel1.setBackground(bg);
@@ -88,12 +91,12 @@ public class DrawingApplicationFrame extends JFrame implements ActionListener
         // add panel2's components to it
         panel2.add(panel2_text);
         panel2.add(filled);
-        panel2.add(gradient);
-        panel2.add(dashed);
-        panel2.add(width_text);
-        panel2.add(width);
-        panel2.add(dash_text);
-        panel2.add(dashLength);
+        //panel2.add(gradient);
+        //panel2.add(dashed);
+        //panel2.add(width_text);
+        //panel2.add(width);
+        //panel2.add(dash_text);
+        //panel2.add(dashLength);
         panel2.setBackground(bg);
 
         // to know if each of these buttons were pressed
@@ -181,13 +184,18 @@ public class DrawingApplicationFrame extends JFrame implements ActionListener
         {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
-
+            // Iterator design pattern
+            Iterator<MyShapes> itr=list.iterator();
+            while(itr.hasNext()){
+                itr.next().draw(g2d);
+            }
             //loop through the shapes and draw them
-            int counter = 0;
+            /*int counter = 0;
             while(counter < num_shapes){
                 list.get(counter).draw(g2d);
+
                 counter++;
-            }
+            }*/
         }
 
         private class MouseHandler extends MouseAdapter implements MouseMotionListener
@@ -220,7 +228,7 @@ public class DrawingApplicationFrame extends JFrame implements ActionListener
                 Point start = new Point(event.getX(), event.getY());
                 
                 //determine what shape to draw
-                switch (shape_selected) {
+               /* switch (shape_selected) {
                     
                     case 0: // rectangle
                         temp_shape = new MyRectangle(start, start, paint, stroke, isFilled); 
@@ -233,7 +241,9 @@ public class DrawingApplicationFrame extends JFrame implements ActionListener
                     case 2: // line
                         temp_shape = new MyLine(start, start, paint, stroke);
                         break;
-                }
+                }*/
+                // factory design pattern
+                temp_shape= ShapeFactory.getShape(shape_selected,start, start, paint, stroke, isFilled);
                 
                 // add shape to list and increment shape number
                 list.add(temp_shape);
